@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Company;
+use App\Models\JobCategory;
+use App\Models\JobApplication;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -32,5 +35,10 @@ class JobListing extends Model
     public function job_category()
     {
         return $this->belongsTo(JobCategory::class, 'job_category_id');
+    }
+
+    public function job_application()
+    {
+        return $this->hasMany(JobApplication::class, 'job_listing_id');
     }
 }

@@ -19,4 +19,9 @@ class UserResume extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function job_application()
+    {
+        return $this->hasMany(JobApplication::class, 'resume_id');
+    }
 }
