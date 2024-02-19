@@ -3,10 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Company;
+use App\Models\JobListing;
+use App\Models\UserDetail;
+use App\Models\UserResume;
+use App\Models\JobApplication;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -42,4 +47,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function user_detail()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id');
+    }
+
+    public function user_resume()
+    {
+        return $this->hasMany(UserResume::class, 'user_id');
+    }
+
+    public function company()
+    {
+        return $this->hasMany(Company::class, 'user_id');
+    }
+
+    public function job_listing()
+    {
+        return $this->hasMany(JobListing::class, 'user_id');
+    }
+
+    public function job_application()
+    {
+        return $this->hasMany(JobApplication::class, 'user_id');
+    }
 }
