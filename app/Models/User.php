@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Company;
 use App\Models\UserDetail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -52,5 +53,10 @@ class User extends Authenticatable
     public function user_resume()
     {
         return $this->hasMany(UserResume::class, 'user_id');
+    }
+
+    public function company()
+    {
+        return $this->hasMany(Company::class, 'user_id');
     }
 }
