@@ -32,10 +32,11 @@
                 </a>
             </li>
             <li class="hover:bg-blue-500 hover:rounded-md hover:text-white p-2">
-                <a href="#" class="">
+                <form action="{{ route('dashboard.logout') }}" method="post">
+                    @csrf
                     <i class="ps-2.5 fa-solid fa-right-from-bracket"></i>
-                    <span class="ml-3 flex-1 whitespace-nowrap">Logout</span>
-                </a>
+                    <button type="submit" class="ml-3 flex-1 whitespace-nowrap">Logout</button type="submit">
+                </form>
             </li>
         </ul>
     </div>
