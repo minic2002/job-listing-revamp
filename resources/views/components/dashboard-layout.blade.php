@@ -32,8 +32,8 @@
                 <div class="w-[20%]">
                     @include('partials.dashboard._sidenav')
                 </div>
-                <div class="w-[85%] bg-gray-200 h-screen pt-16 px-16">
-                    {{$slot}}
+                <div class="w-[85%] bg-gray-200 h-screen pt-6 px-6">
+                    {{ $slot }}
                 </div>
             </div>
         </main>
