@@ -53,37 +53,24 @@
                 </div>
             </div>
             <div class="mt">
+                @if ($companies->count() > 0)
                 <ul>
+                    @foreach ($companies as $company)
                     <li class="flex items-center p-2 "> <img src="{{ asset('images/logo.png') }}" alt="logo"
-                            class="w-8 rounded-full">
+                        class="w-8 rounded-full">
                         <span class="mx-2">
-                            <h4>HIPE 1</h4>
-                        </span>
-
-
-                    </li>
-                    <div class="mx-auto ">
-                        <hr class="border-gray-400 border-1/2 w-[95%]  mx-2">
-                    </div>
-                    <li class="flex items-center p-2"> <img src="{{ asset('images/logo.png') }}" alt="logo"
-                            class="w-8 rounded-full">
-                        <span class="mx-2">
-                            <h4>HIPE 2</h4>
+                            <h4>{{ $company->name }}</h4>
                         </span>
                     </li>
                     <div class="mx-auto ">
                         <hr class="border-gray-400 border-1/2 w-[95%]  mx-2">
                     </div>
-                    <li class="flex items-center p-2"> <img src="{{ asset('images/logo.png') }}" alt="logo"
-                            class="w-8 rounded-full">
-                        <span class="mx-2">
-                            <h4>HIPE 3</h4>
-                        </span>
-                    </li>
-                    <div class="mx-auto ">
-                        <hr class="border-gray-400 border-1/2 w-[95%]  mx-2">
-                    </div>
+                    @endforeach
                 </ul>
+                   
+                @else
+                    <p>No Companies Listed</p> 
+                @endif
             </div>
         </div>
         <div class="rounded-md p-4 shadow-md p2 bg-gray-100">Content is uploading...</div>
