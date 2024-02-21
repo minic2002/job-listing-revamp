@@ -38,6 +38,9 @@ Route::group([
 
 //User Logic
 
+#Dashboard
+Route::post('/update/settings', [UserDashboardController::class, 'update_settings']);
+
 #Register the user
 Route::post('/users', [UserController::class, 'store']);
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
