@@ -53,10 +53,10 @@
                 </div>
             </div>
             <div class="mt">
-                @if ($companies->count() > 0)
+                @if ($companies)
                 <ul>
                     @foreach ($companies as $company)
-                    <li class="flex items-center p-2 "> <img src="{{ asset('images/logo.png') }}" alt="logo"
+                    <li class="flex items-center p-2 "> <img src="{{ asset('storage/' . $company->logo_url) }}" onerror="this.src='{{asset('/images/logo_hipe_black.png')}}'" alt="logo"
                         class="w-8 rounded-full">
                         <span class="mx-2">
                             <h4>{{ $company->name }}</h4>
