@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('email');
             $table->string('website');
             $table->timestamps();
-            $table->dateTime('deleted_at');
+            $table->dateTime('deleted_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('Cascade');
         });
