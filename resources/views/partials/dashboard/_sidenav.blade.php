@@ -1,4 +1,4 @@
-<div class="h-full w-full border-r-2 border-gray-300 bg-white">
+<div class="h-full w-full border-r-2 border-gray-300 bg-white pt-20">
     <div class="px-4 pt-6">
         <ul class="space-y-2">
             <li class="hover:bg-blue-500 hover:rounded-md hover:text-white p-2" id="home">

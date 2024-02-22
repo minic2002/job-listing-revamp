@@ -8,8 +8,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
             integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
         <script src="https://unpkg.com/alpinejs"></script>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
         <script>
             tailwind.config = {
                 theme: {
@@ -27,15 +29,20 @@
     </head>
     <body>
         <main>
-            @include('partials.dashboard._header')
-            <div class="flex">
-                <div class="w-[20%]">
+            <div class="z-40 fixed top-0 w-full">
+                @include('partials.dashboard._header')
+            </div>
+    
+            <div class="flex justify-end">
+                <div class="w-[20%] fixed left-0 top-0 h-full">
                     @include('partials.dashboard._sidenav')
                 </div>
-                <div class="w-[85%] bg-gray-200 h-screen pt-6 px-6">
-                    {{ $slot }}
+                <div class="w-[80%] bg-gray-200 min-h-screen pb-12 pt-28 px-8">
+                    {{$slot}}
                 </div>
             </div>
         </main>
+
+        <x-flash-message />
     </body>
 </html>
