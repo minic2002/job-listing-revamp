@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserDashboardController extends Controller
 {
@@ -29,14 +30,42 @@ class UserDashboardController extends Controller
         $user_job_applications_count = $user->job_application()->count();
 
         //Company
-        $user_companies = $user->company()->latest()->limit(5);
+        $user_companies = $user->company()->latest()->limit(5)->get();
         // dd($user_companies->count());
         return view('dashboard.home', ['listings_count' => $user_joblistings_count, 'listing_applications_count' => $user_job_listing_application_count, 'applications_count' => $user_job_applications_count, 'companies' => $user_companies]);
     }
-    public function company()
+    public function company(Request $request)
     {
-        return view('dashboard.company');
+        $user = $request->user();
+        $companies = $user->company()->latest()->get();
+        return view('dashboard.company', ['companies' => $companies]);
     }
+    public function company_create()
+    {
+        return view('dashboard.company-create');
+    }
+    public function store_company(Request $request)
+    {
+        $user = $request->user();
+
+        $formFields = $request->validate([
+            'name' => ['required', Rule::unique('companies', 'name')],
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'postal' => 'required',
+            'tel' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'website' => 'required',
+        ]);
+
+        if ($request->hasFile('logo_url')) {
+            $formFields['logo_url'] = $request->file('logo_url')->store('logos', 'public');
+        }
+        $user->company()->create($formFields);
+        return redirect(route('dashboard.company'))->with('success', 'Company Created Successfully');
+    }
+
     public function listings()
     {
         return view('dashboard.listings');

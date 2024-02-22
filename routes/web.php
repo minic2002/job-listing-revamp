@@ -30,6 +30,7 @@ Route::group([
     Route::get('/', [UserDashboardController::class, 'dashboard']);
     Route::get('home', [UserDashboardController::class, 'home'])->name('.home');
     Route::get('company', [UserDashboardController::class, 'company'])->name('.company');
+    Route::get('company/create', [UserDashboardController::class, 'company_create'])->name('.company-create');
     Route::get('job-listings', [UserDashboardController::class, 'listings'])->name('.job-listings');
     Route::get('job-applications', [UserDashboardController::class, 'applications'])->name('.job-applications');
     Route::get('settings', [UserDashboardController::class, 'settings'])->name('.settings');
@@ -40,6 +41,7 @@ Route::group([
 
 #Dashboard
 Route::post('/update/settings', [UserDashboardController::class, 'update_settings']);
+Route::post('/store/company', [UserDashboardController::class, 'store_company']);
 
 #Register the user
 Route::post('/users', [UserController::class, 'store']);
