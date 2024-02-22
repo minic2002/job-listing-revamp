@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -66,10 +68,43 @@ class UserDashboardController extends Controller
         return redirect(route('dashboard.company'))->with('success', 'Company Created Successfully');
     }
 
-    public function listings()
+    public function listings(Request $request)
     {
-        return view('dashboard.listings');
+        $user = $request->user();
+        $listings = $user->job_listing()->latest()->get();
+        return view('dashboard.listings', ['listings' => $listings]);
     }
+
+    public function listings_post()
+    {
+        $companies = Company::all();
+        $categories = JobCategory::all();
+        if ($companies->count() != 0) {
+            return view('dashboard.job-post', ['companies' => $companies, 'categories' => $categories]);
+        } else {
+            return redirect(route('dashboard.job-listings'))->with('error', 'Posting a job requires atleast one company');
+        }
+
+    }
+
+    public function store_job_post(Request $request)
+    {
+        $user = $request->user();
+        $formfields = $request->validate([
+            'company_id' => 'required',
+            'employment_type' => 'required',
+            'min_monthly_salary' => 'required',
+            'max_monthly_salary' => 'required',
+            'job_title' => 'required',
+            'job_category_id' => 'required',
+            'description' => 'required',
+        ]);
+
+        $user->job_listing()->create($formfields);
+        return redirect(route('dashboard.job-listings'))->with('success', 'Listing added successfully');
+
+    }
+
     public function applications()
     {
         return view('dashboard.applications');
