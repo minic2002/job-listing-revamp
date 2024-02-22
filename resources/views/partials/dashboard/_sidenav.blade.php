@@ -57,7 +57,7 @@
     });
 </script>
 
-@elseif(request()->path() == 'dashboard/company')
+@elseif(request()->path() == 'dashboard/company' || request()->path() == 'dashboard/company/create')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         company.classList.add('bg-blue-500', 'rounded-md', 'text-white');
