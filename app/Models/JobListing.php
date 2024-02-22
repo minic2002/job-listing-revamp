@@ -18,6 +18,7 @@ class JobListing extends Model
         'job_category_id',
         'min_monthly_salary',
         'max_monthly_salary',
+        'job_title',
         'description',
         'employment_type',
     ];
