@@ -105,9 +105,11 @@ class UserDashboardController extends Controller
 
     }
 
-    public function applications()
+    public function applications(Request $request)
     {
-        return view('dashboard.applications');
+        $user = $request->user();
+        $applications = $user->job_application()->latest()->get();
+        return view('dashboard.applications', ['applications' => $applications]);
     }
     public function settings(Request $request)
     {
@@ -144,5 +146,30 @@ class UserDashboardController extends Controller
             return redirect(route('dashboard.settings'))->with('success', 'User Details created successfully');
         }
 
+    }
+
+    public function resume(Request $request)
+    {
+        $user = $request->user();
+        $resumes = $user->user_resume()->latest()->get();
+        return view('dashboard.resume', ['resumes' => $resumes]);
+    }
+
+    public function post_resume()
+    {
+        return view('dashboard.post-resume');
+    }
+
+    public function store_resume(Request $request)
+    {
+        $user = $request->user();
+        $formfields = $request->validate([
+            'name' => 'required',
+            'resume_url' => 'required|mimes:pdf,xlsx,xls,csv',
+        ]);
+
+        $formfields['resume_url'] = $request->file('resume_url')->store('resumes', 'public');
+        $user->user_resume()->create($formfields);
+        return redirect(route('dashboard.my-resume'))->with('success', 'Resume created successfully');
     }
 }
