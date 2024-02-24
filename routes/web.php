@@ -34,6 +34,8 @@ Route::group([
     Route::get('job-listings', [UserDashboardController::class, 'listings'])->name('.job-listings');
     Route::get('job-listings/job-post', [UserDashboardController::class, 'listings_post'])->name('.job-listings-post');
     Route::get('job-applications', [UserDashboardController::class, 'applications'])->name('.job-applications');
+    Route::get('my-resume', [UserDashboardController::class, 'resume'])->name('.my-resume');
+    Route::get('my-resume/post-resume', [UserDashboardController::class, 'post_resume'])->name('.my-resume-post');
     Route::get('settings', [UserDashboardController::class, 'settings'])->name('.settings');
 });
 
@@ -44,6 +46,7 @@ Route::group([
 Route::post('/update/settings', [UserDashboardController::class, 'update_settings']);
 Route::post('/store/company', [UserDashboardController::class, 'store_company']);
 Route::post('/store/job-post', [UserDashboardController::class, 'store_job_post']);
+Route::post('/store/resume', [UserDashboardController::class, 'store_resume']);
 
 #Register the user
 Route::post('/users', [UserController::class, 'store']);

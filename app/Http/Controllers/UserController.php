@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function home()
     {
-        return redirect('/login');
+        return view('landing');
     }
     public function login()
     {

@@ -25,6 +25,12 @@
                     <span class="ml-3 flex-1 whitespace-nowrap">Job Applications</span>
                 </a>
             </li>
+            <li class="hover:bg-blue-500 hover:rounded-md hover:text-white p-2" id="resume">
+                <a href="{{ route('dashboard.my-resume') }}" class="">
+                    <i class="ps-2.5 fa-solid fa-file"></i>
+                    <span class="ml-3 flex-1 whitespace-nowrap">My Resume</span>
+                </a>
+            </li>
             <li class="hover:bg-blue-500 hover:rounded-md hover:text-white p-2" id="setting">
                 <a href="{{ route('dashboard.settings') }}" class="">
                     <i class="ps-2.5 fa-solid fa-gear"></i>
@@ -48,6 +54,7 @@
     let listing = document.getElementById('listing');
     let application = document.getElementById('application');
     let setting = document.getElementById('setting');
+    let resume = document.getElementById('resume');
 </script>
 
 @if (request()->path() == 'dashboard/home')
@@ -82,6 +89,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         setting.classList.add('bg-blue-500', 'rounded-md', 'text-white');
+    });
+</script>
+
+@elseif(request()->path() == 'dashboard/my-resume' || request()->path() == 'dashboard/my-resume/post-resume')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        resume.classList.add('bg-blue-500', 'rounded-md', 'text-white');
     });
 </script>
 
