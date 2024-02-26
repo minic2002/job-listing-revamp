@@ -46,7 +46,7 @@ Route::group([
     'prefix' => 'listings'
 ], function () {
     Route::get('{listing}', [ListingController::class, 'show']);
-    // Route::get('apply/{listing}', [ListingController::class, 'job_form']);
+    Route::post('apply', [ListingController::class, 'job_apply']);
 });
 
 

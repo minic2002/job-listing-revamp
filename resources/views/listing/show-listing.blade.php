@@ -5,15 +5,11 @@
 
     <div class="mx-4">
         <x-card class="p-10">
-            <div
-                class="flex flex-col items-center justify-center text-center"
-            >
-                <img
-                    class="w-48 mr-6 mb-6"
+            <div class="flex flex-col items-center justify-center text-center">
+                <img class="w-48 mr-6 mb-6"
                     src="{{asset('storage/' . $listing->company->logo_url)}}"
                     onerror="this.src='{{asset('images/no-image.png')}}'"
-                    alt=""
-                />
+                    alt="" />
 
                 <h3 class="text-2xl mb-2">{{ $listing->job_title }}</h3>
                 <div class="text-xl font-bold mb-4">{{ $listing->company->name }}</div>
@@ -30,12 +26,30 @@
                             {{ $listing->description }}
                         </p>
 
-                        <a
-                            href="/listings/apply/{{ $listing->id }}"
-                            class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"
-                            ><i class="fa-solid fa-envelope"></i>
-                            Apply Now</a
-                        >
+                        @auth
+                            @if ($resumes->count() > 0  &&  auth()->user()->id != $listing->user_id)
+                                <a
+                                    onclick="openModal()"
+                                    class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80 cursor-pointer">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    Apply Now
+                                </a>
+                            @else
+                                <a 
+                                    href="/dashboard/my-resume"
+                                    class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80 cursor-pointer">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    Apply Now
+                                </a>
+                            @endif
+                        @else
+                            <a 
+                                href="/login"
+                                class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80 cursor-pointer">
+                                <i class="fa-solid fa-envelope"></i>
+                                Apply Now
+                            </a>
+                        @endauth
 
                     </div>
                 </div>
@@ -43,5 +57,18 @@
         </x-card>
 
     </div>
-
+    
+    {{-- Modal --}}
+    @include('partials/listing/_job-form-modal')
+    <script>
+        const modal = document.querySelector('.main-modal');
+    
+        const modalClose = () => {
+            modal.classList.add('hidden');
+        }
+    
+        const openModal = () => {
+            modal.classList.remove('hidden');
+        }
+    </script>
 </x-layout>
