@@ -109,7 +109,8 @@ class UserDashboardController extends Controller
     {
         $user = $request->user();
         $applications = $user->job_application()->latest()->get();
-        return view('dashboard.applications', ['applications' => $applications]);
+        $headers = ['Name', 'Job Title', 'Salary Range', 'Resume', 'Date Applied'];
+        return view('dashboard.applications', ['applications' => $applications, 'headers' => $headers]);
     }
     public function settings(Request $request)
     {

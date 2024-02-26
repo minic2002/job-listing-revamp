@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\JobListing;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
-        return view('landing');
+        $listings = JobListing::all();
+        return view('landing', ['listings' => $listings]);
     }
     public function login()
     {

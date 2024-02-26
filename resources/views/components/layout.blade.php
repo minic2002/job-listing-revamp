@@ -18,6 +18,9 @@
                     extend: {
                         colors: {
                             laravel: "#ef3b2d",
+                            "hipe-blue": "#229fe7",
+                            "hipe-dark-blue": "#023047",
+                            "hipe-yellow": "#ffa903"
                         },
                     },
                 },
