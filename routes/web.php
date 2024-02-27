@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDashboardController;
@@ -37,6 +38,15 @@ Route::group([
     Route::get('my-resume', [UserDashboardController::class, 'resume'])->name('.my-resume');
     Route::get('my-resume/post-resume', [UserDashboardController::class, 'post_resume'])->name('.my-resume-post');
     Route::get('settings', [UserDashboardController::class, 'settings'])->name('.settings');
+});
+
+//Listing Page/s
+Route::group([
+    'as' => 'listings',
+    'prefix' => 'listings'
+], function () {
+    Route::get('{listing}', [ListingController::class, 'show']);
+    Route::post('apply', [ListingController::class, 'job_apply']);
 });
 
 

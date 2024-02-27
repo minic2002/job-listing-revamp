@@ -41,7 +41,7 @@
                     class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ ($listing->employment_type == 'full-time') ? 'text-green-600 bg-green-50' : 'text-orange-600 bg-orange-50' }}"
                   >
                     <span class="h-1.5 w-1.5 rounded-full {{ ($listing->employment_type == 'full-time') ? 'bg-green-600' : 'bg-orange-600' }}"></span>
-                    {{ Str::studly($listing->employment_type) }}
+                    {{ ucwords(str_replace("-", " - ", $listing->employment_type)) }}
                   </span>
                 </td>
                 </tr>                  

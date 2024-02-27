@@ -1,35 +1,26 @@
-<div class="bg-fixed mx-auto bg-[#023047] h-screen w-full bg-no-repeat bg-cover "
-style="background-image:url({{ asset('images/bg_p-information.png') }})">
-
-{{-- <img src="{{ asset('images/bg_p-information.png') }}" alt="logo" class="w-screen h-full  p-2"
-
->
---}}
-<div class="flex items-center justify-around items-base ">
-    <div class="flex flex-col  ml-20">
-        <h2 class="text-white font-bold text-lg -mb-4 mx-4">YOURSURNAME</h2>
-        <div class="">
-            <h1 class="text-8xl font-bold text-[#ffa903]">JOB<span class="text-[#229fe7]">LISTING</span></h1>
-
-            <div class="">
-                <p class="flex justify-end text-lg text-white mx-[120px] -mt-2">Project</p>
-            </div>
-        </div>
-
-        <div class="mt-2 ">
-            <h1 class="text-white font-bold text-4xl">Discover hidden professional treasures.</h1>
-        </div>
+<section class="select-none relative h-screen bg-[#023047] flex flex-col justify-center align-center text-center">
+    @include('partials.landing._header')
+    <!-- include the header component partial !-->
+    <div class="absolute top-0 right-0 flex justify-center items-center w-1/2 h-full">
+        <img class="pb-24" src="images/footer-object.gif" alt="">
     </div>
-    <div class=" mx-4 ">
+    <div class="absolute top-0 bottom-[20px] flex w-full h-full opacity-20" style="">
+        <img class="justify-center items-center" src="images/bg_p-information.png" alt="">
+    </div>
 
-        <img class="h-full w-full rounded-lg object-contain bg-gray-200 object-fill bg-transparent"
-            src="{{ asset('images/footer-object.gif') }}" alt="" />
+    <div class="max-w-7xl container mx-auto hidden lg:block z-10 text-start relative">
+        <span class="absolute text-xs font-semibold text-white pt-4 ps-4">NAVOS'</span>
+        <h1 class="text-[84px] font-bold uppercase text-[#ffa903]">
+            JOB<span class="text-[#229fe7] font-semibold">LISTING</span>
+        </h1>
+        <span class="absolute text-[10px] font-semibold text-white bottom-[45px] left-[410px] tracking-widest">PROJECT</span>
+        <p class="text-3xl text-gray-200 font-bold p-0 m-0">
+            Discover hidden professional treasures.
+        </p>
     </div>
-</div>
-<div class="flex justify-center">
-    <div>
-        <p class="text-white">scroll down</p>
-        <p class="flex justify-center"><i class="fa-solid fa-angle-down text-white"></i></p>
+
+    <div class="absolute bottom-0 w-full text-center py-6 text-white">
+        <p>scroll down</p>
+        <p><i class="fa-solid fa-angle-down"></i></p>
     </div>
-</div>
-</div>
+</section>
