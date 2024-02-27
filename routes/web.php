@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -16,7 +17,8 @@ use App\Http\Controllers\UserDashboardController;
 |
 */
 
-Route::get('/', [UserController::class, 'home']);
+Route::get('/', [LandingController::class, 'home']);
+Route::post('/store-email', [LandingController::class, 'store_email']);
 
 //User Pages
 Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');

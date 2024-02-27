@@ -8,11 +8,15 @@
                 <h2 class="inline sm:block lg:inline xl:block">Want news and updates?</h2>
                 <p class="inline sm:block lg:inline xl:block">Sign up for our newsletter.</p>
             </div>
-            <form class="w-full max-w-md lg:col-span-5 lg:pt-2">
+            <form action="/store-email" class="w-full max-w-md lg:col-span-5 lg:pt-2" method="POST">
+                @csrf
                 <div class="flex gap-x-4">
                 <label for="email-address" class="sr-only">Email address</label>
-                <input id="email-address" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-md border-0 bg-white/10 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-white/75 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6" placeholder="Enter your email">
+                <input id="email-address" name="email" type="email" autocomplete="email" value="{{old('email')}}" required class="min-w-0 flex-auto rounded-md border-0 bg-white/10 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-white/75 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6" placeholder="Enter your email">
                 <button type="submit" class="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-[#229fe7] shadow-sm hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Subscribe</button>
+                      @error('email')
+                        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                      @enderror
                 </div>
                 <p class="mt-4 text-sm leading-6 text-gray-300">We care about your data. Read our <a href="#" class="font-semibold text-white hover:text-indigo-50">privacy&nbsp;policy</a>.</p>
             </form>
