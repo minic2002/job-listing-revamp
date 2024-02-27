@@ -21,6 +21,6 @@
 
     <div class="absolute bottom-0 w-full text-center py-6 text-white">
         <p>scroll down</p>
-        <p><i class="fa-solid fa-angle-down"></i></p>
+        <p class="animate-bounce"><i class="fa-solid fa-angle-down"></i></p>
     </div>
 </section>

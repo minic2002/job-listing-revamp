@@ -25,6 +25,6 @@ class LandingController extends Controller
         $formfields['subscribe_date'] = Carbon::now();
 
         Newsletter::create($formfields);
-        return Redirect::back()->with('success', 'Very Good');
+        return Redirect::back()->with('success', 'Thank You for Subscribing!');
     }
 }
