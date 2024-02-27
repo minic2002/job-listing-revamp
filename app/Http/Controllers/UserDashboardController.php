@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\JobApplication;
+use App\Models\JobListing;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class UserDashboardController extends Controller
 {
@@ -172,5 +176,35 @@ class UserDashboardController extends Controller
         $formfields['resume_url'] = $request->file('resume_url')->store('resumes', 'public');
         $user->user_resume()->create($formfields);
         return redirect(route('dashboard.my-resume'))->with('success', 'Resume created successfully');
+    }
+
+    public function job_applicants(Request $request)
+    {
+        $user = $request->user();
+        $listing = $user->job_listing()->find($request->listing_id);
+        if($listing != null && $listing->user_id == $user->id)
+        {
+            $applicants = $listing->job_application()->latest()->get();
+            $headers = ['Application ID','First Name','Last Name','Contact Number','Email Address','Status'];
+            $statuses = ['pending', 'accept', 'reject', 'on-initial-interview', 'on-skills-test', 'on-final-interview', 'hired', 'failed', 'declined'];
+            return view('dashboard.job-applicants',['headers' => $headers, 'listing' => $listing, 'applicants' => $applicants, 'statuses' => $statuses]);
+        } else {
+            return redirect(route('dashboard.job-listings'))->with('error', 'Listing Id does not exist');
+        } 
+    }
+
+    public function update_application_status(Request $request)
+    {
+        $applicant = JobApplication::find($request->applicant_id);
+
+        if ($applicant){
+
+            $applicant->status = $request->status;
+            $applicant->save();
+            
+            return Redirect::back()->with(['success' => 'Applicant status successfully updated']);
+        }else{
+            return Redirect::back()->with(['error' => 'Applicant not found']);
+        }
     }
 }

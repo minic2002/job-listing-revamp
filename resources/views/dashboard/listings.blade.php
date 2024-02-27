@@ -13,7 +13,6 @@
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Job Category</th>
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Applicants</th>
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Employee Type</th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 border-t border-gray-100">
@@ -35,7 +34,7 @@
                     </div>
                   </th>
                   <td class="px-6 py-4">{{ $listing->job_category->name }}</td>
-                  <td class="px-6 py-4">{{ $listing->job_application->count() }}</td>
+                  <td class="px-6 py-4"><a href="/dashboard/job-listings/{{ $listing->id }}/applicants">{{ $listing->job_application->count() }}</a></td>
                   <td class="px-6 py-4">
                   <span
                     class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ ($listing->employment_type == 'full-time') ? 'text-green-600 bg-green-50' : 'text-orange-600 bg-orange-50' }}"

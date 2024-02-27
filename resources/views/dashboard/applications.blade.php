@@ -75,7 +75,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="5" class="px-6 py-4">NO DATA AVAILABLE</td>
+                    <td colspan="6" class="px-6 py-4 text-center">NO DATA AVAILABLE</td>
                 </tr>
             @endif
         </tbody>
