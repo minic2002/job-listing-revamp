@@ -32,10 +32,45 @@
                             <div class="text-gray-400">{{ $application->job_listing->company->email }}</div>
                         </div>
                     </th>
-                    <td class="px-6 py-4">{{ $application->job_listing->job_title }}</td>
+                    <td class="px-6 py-4">
+                        <span
+                            class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600"
+                        >
+                            <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                            {{ $application->job_listing->job_title }}
+                        </span>
+                    </td>
                     <td class="px-6 py-4">{{ '₱' . $application->job_listing->min_monthly_salary . ' - ₱' . $application->job_listing->max_monthly_salary }}</td>
                     <td class="px-6 py-4">{{ $application->user_resume->name }}</td>
                     <td class="px-6 py-4">{{ date('Y-m-d', strtotime($application->created_at)) }}</td>
+                    <td class="px-6 py-4">
+                        @switch($application->status)
+                            @case('accept')
+                            @case('on-initial-interview')
+                            @case('on-skills-test')
+                            @case('on-final-interview')
+                            @case('hired')
+                                <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                                    {{ ucwords($application->status) }}
+                                </span>
+                                @break
+                            @case('reject')
+                            @case('failed')
+                            @case('declined')
+                                <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                                    {{ ucwords($application->status) }}
+                                </span>
+                                @break
+                            @default
+                                <span class="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-1 text-xs font-semibold text-orange-600">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-orange-600"></span>
+                                    {{ ucwords($application->status) }}
+                                </span>
+                        @endswitch
+                        
+                    </td>
                 </tr>
                 @endforeach
             @else
