@@ -28,11 +28,9 @@ class ListingController extends Controller
             'education' => 'required'
         ]);
 
-
-        $job_application = $user->job_application()->firstOrNew($formFields);
-
-        if (!$job_application->exists()) {
-            $job_application->save();
+        $existing_job_application = $user->job_application()->where('job_listing_id', $formFields['job_listing_id'])->first();
+        if (!$existing_job_application) {
+            $user->job_application()->create($formFields);
             return redirect(route('dashboard.job-applications'))->with('success', 'Application form submitted');
         } else {
             return redirect(route('dashboard.job-applications'))->with('error', 'You already submitted an application form on this company');
