@@ -18,6 +18,8 @@ use App\Http\Controllers\UserDashboardController;
 */
 
 Route::get('/', [LandingController::class, 'home']);
+Route::get('/contact', [LandingController::class, 'contact']);
+Route::post('/store-message', [LandingController::class, 'store_message']);
 Route::post('/store-email', [LandingController::class, 'store_email']);
 
 //User Pages
