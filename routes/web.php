@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -16,7 +17,10 @@ use App\Http\Controllers\UserDashboardController;
 |
 */
 
-Route::get('/', [UserController::class, 'home']);
+Route::get('/', [LandingController::class, 'home']);
+Route::get('/contact', [LandingController::class, 'contact']);
+Route::post('/store-message', [LandingController::class, 'store_message']);
+Route::post('/store-email', [LandingController::class, 'store_email']);
 
 //User Pages
 Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
@@ -33,6 +37,7 @@ Route::group([
     Route::get('company', [UserDashboardController::class, 'company'])->name('.company');
     Route::get('company/create', [UserDashboardController::class, 'company_create'])->name('.company-create');
     Route::get('job-listings', [UserDashboardController::class, 'listings'])->name('.job-listings');
+    Route::get('job-listings/{listing_id}/applicants', [UserDashboardController::class, 'job_applicants'])->name('.job-applicants');
     Route::get('job-listings/job-post', [UserDashboardController::class, 'listings_post'])->name('.job-listings-post');
     Route::get('job-applications', [UserDashboardController::class, 'applications'])->name('.job-applications');
     Route::get('my-resume', [UserDashboardController::class, 'resume'])->name('.my-resume');
@@ -57,6 +62,7 @@ Route::post('/update/settings', [UserDashboardController::class, 'update_setting
 Route::post('/store/company', [UserDashboardController::class, 'store_company']);
 Route::post('/store/job-post', [UserDashboardController::class, 'store_job_post']);
 Route::post('/store/resume', [UserDashboardController::class, 'store_resume']);
+Route::post('/job-listings/{listing_id}/applicant/{applicant_id}/update-status',[UserDashboardController::class, 'update_application_status']);
 
 #Register the user
 Route::post('/users', [UserController::class, 'store']);
