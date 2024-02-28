@@ -25,7 +25,7 @@ class UserDashboardController extends Controller
         $user_joblistings_count = $user->job_listing()->count();
 
         //Job Listing Applications Count
-        $user_job_listings = $user->job_listing();
+        $user_job_listings = $user->job_listing()->latest()->get();
         $user_job_listing_application_count = 0;
 
         foreach ($user_job_listings as $user_job_listing) {
@@ -43,7 +43,7 @@ class UserDashboardController extends Controller
     public function company(Request $request)
     {
         $user = $request->user();
-        $companies = $user->company()->latest()->get();
+        $companies = $user->company()->withoutTrashed()->latest()->get();
         return view('dashboard.company', ['companies' => $companies]);
     }
     public function company_create()
@@ -79,9 +79,10 @@ class UserDashboardController extends Controller
         return view('dashboard.listings', ['listings' => $listings]);
     }
 
-    public function listings_post()
+    public function listings_post(Request $request)
     {
-        $companies = Company::all();
+        $user = $request->user();
+        $companies = $user->company()->latest()->get();
         $categories = JobCategory::all();
         if ($companies->count() != 0) {
             return view('dashboard.job-post', ['companies' => $companies, 'categories' => $categories]);
@@ -185,7 +186,7 @@ class UserDashboardController extends Controller
         if($listing != null && $listing->user_id == $user->id)
         {
             $applicants = $listing->job_application()->latest()->get();
-            $headers = ['Application ID','First Name','Last Name','Contact Number','Email Address','Status'];
+            $headers = ['Application ID','First Name','Last Name','Contact Number','Email Address','Resume','Status'];
             $statuses = ['pending', 'accept', 'reject', 'on-initial-interview', 'on-skills-test', 'on-final-interview', 'hired', 'failed', 'declined'];
             return view('dashboard.job-applicants',['headers' => $headers, 'listing' => $listing, 'applicants' => $applicants, 'statuses' => $statuses]);
         } else {
@@ -206,5 +207,14 @@ class UserDashboardController extends Controller
         }else{
             return Redirect::back()->with(['error' => 'Applicant not found']);
         }
+    }
+
+    public function destroy_company(Request $request){
+        $user = $request->user();
+        $company = $user->company()->find($request->company_id);
+        
+        $company->delete();
+
+        return Redirect::back()->with('success', 'Company successfully moved to trash');
     }
 }

@@ -21,6 +21,11 @@
                         <td class="px-6 py-4">{{ $applicant->tel }}</td>
                         <td class="px-6 py-4">{{ $applicant->user->email }}</td>
                         <td class="px-6 py-4">
+                            <a href="{{ asset('storage/' . $applicant->user_resume->resume_url ) }}" target="_blank">
+                                {{ $applicant->user_resume->name }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4">
                             <form id="form_{{$applicant->id}}" method="POST" action="/job-listings/{{$listing->id}}/applicant/{{$applicant->id}}/update-status" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="applicant_id" value="{{$applicant->id}}">

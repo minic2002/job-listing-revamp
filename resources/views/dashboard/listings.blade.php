@@ -16,7 +16,7 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-            @if ($listings)
+            @if ($listings->count() > 0)
                 @foreach ($listings as $listing)
                 <tr class="hover:bg-gray-50">
                   <th class="flex gap-3 px-6 py-4 font-normal text-gray-900 items-center">
