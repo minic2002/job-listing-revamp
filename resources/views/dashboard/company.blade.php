@@ -13,11 +13,11 @@
             <th scope="col" class="px-6 py-4 font-medium text-gray-900">Website</th>
             <th scope="col" class="px-6 py-4 font-medium text-gray-900">Address</th>
             <th scope="col" class="px-6 py-4 font-medium text-gray-900">Contact</th>
-            <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
+            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-          @if ($companies)
+          @if ($companies->count() > 0)
               @foreach ($companies as $company)
               <tr class="hover:bg-gray-50">
                 <th class="flex gap-3 px-6 py-4 font-normal text-gray-900 items-center">
@@ -46,11 +46,51 @@
                 <td class="px-6 py-4">
                   {{ $company->tel }}
                 </td>
+                <td class="py-4">
+                  <div class="flex justify-start gap-4">
+                      <form id="form_{{$company->id}}" method="POST" action="/company/{{$company->id}}/trash" enctype="multipart/form-data">
+                          @csrf
+                          <input type="hidden" name="company_id" value="{{$company->id}}">
+                          <div class="space-x-2 text-center px-8">
+                              <a onclick="confirmDelete('{{$company->name}}',{{$company->id}})">
+                                  <i class="fa-solid fa-trash text-xl text-red-600"></i>
+                              </a>
+                          </div>
+                      </form>
+                  </div>
+                </td>
               </tr>                  
               @endforeach
-              
+          @else
+              <td class="px-6 py-4 text-center" colspan="5">NO COMPANIES FOUND</td>
           @endif
         </tbody>
       </table>
     </div>
+
+    <script>
+      function confirmDelete(companyName, companyID) {
+          Swal.fire({
+              title: 'Move to trash?',
+              html: `
+                  <div>
+                      <p>
+                          ${companyName}'s <span class="font-bold text-hipe-yellow">Job Listings</span> and
+                          <span class="font-bold text-hipe-yellow">Job Listing Applications</span> will be disabled.
+                      </p>
+                  </div>
+              `,
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Yes!'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  var form = document.getElementById(`form_${companyID}`);
+                  form.submit();
+              }
+          });
+      }
+    </script>
   </x-dashboard-layout>
