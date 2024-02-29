@@ -143,11 +143,17 @@ class UserDashboardController extends Controller
         // Check if the user already has a user detail record
         if ($user->user_detail) {
             // If user detail exists, update it
+            if ($request->hasFile('profile_logo')) {
+                $formFields['profile_logo'] = $request->file('profile_logo')->storePublicly('public/images/profile');
+            }
             $user->user_detail->update($formFields);
 
             return redirect(route('dashboard.settings'))->with('success', 'User Details updated successfully');
         } else {
             // If user detail does not exist, create a new one
+            if ($request->hasFile('profile_logo')) {
+                $formFields['profile_logo'] = $request->file('profile_logo')->storePublicly('public/images/profile');
+            }
             $user->user_detail()->create($formFields);
             return redirect(route('dashboard.settings'))->with('success', 'User Details created successfully');
         }
