@@ -1,7 +1,12 @@
 <div class="px-[100px] pt-[24px] z-40 absolute top-0 left-0 flex justify-between items-start w-full h-full">
-    <img class="w-[100px]" src="images/img_logo.svg" alt="">
+    <img class="w-[100px]" src="images/hipe_logo.svg" alt="">
     <div class="space-x-6 text-white font-semibold">
-        <a href="/">Home</a>
+        @auth
+            <a href="{{ route('dashboard.home') }}">Home</a>
+        @else
+            <a href="/">Home</a>
+        @endauth
+        
         <a href="/about">About</a>
         <a href="/contact">Contact</a>
         @auth

@@ -9,8 +9,12 @@
                 {{ ($user == null) ? 'ADD DETAILS TO YOUR PROFILE' : 'UPDATE YOUR PROFILE' }}
             </h2>
         </header>
-        <form action="/update/settings" method="post">
+        <form action="/update/settings" method="post" enctype="multipart/form-data">
             @csrf
+            <div class="mb-6">
+                <label for="profile_logo" class="inline-block text-lg mb-2">Profile</label>
+                <input type="file" accept="image/*" name="profile_logo" id="profile_logo" class="border border-gray-200 rounded p-2 w-full">
+            </div>
             <div class="mb-6">
                 <label for="first_name" class="inline-block text-lg mb-2">First Name</label>
                 <input type="text" name="first_name" id="first_name" class="border border-gray-200 rounded p-2 w-full">
