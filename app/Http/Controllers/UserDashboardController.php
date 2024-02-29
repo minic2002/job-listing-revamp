@@ -66,7 +66,7 @@ class UserDashboardController extends Controller
         ]);
 
         if ($request->hasFile('logo_url')) {
-            $formFields['logo_url'] = $request->file('logo_url')->store('logos', 'public');
+            $formFields['logo_url'] = $request->file('logo_url')->storePublicly('public/images/company');
         }
         $user->company()->create($formFields);
         return redirect(route('dashboard.company'))->with('success', 'Company Created Successfully');

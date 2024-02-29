@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\JobListing;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,6 +25,16 @@ class Company extends Model
         'email',
         'website'
     ];
+
+    public function image_url()
+    {
+        // Check if logo_url is set
+        if ($this->logo_url) {
+            return env('AWS_URL') . $this->logo_url;
+        }
+    
+        return null;
+    }
 
     public function user()
     {
