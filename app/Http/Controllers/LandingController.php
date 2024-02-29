@@ -22,6 +22,10 @@ class LandingController extends Controller
         return view('contact');
     }
 
+    public function about(){
+        return view('about');
+    }
+
     public function store_message(Request $request)
     {
         $formfields = $request->validate([
