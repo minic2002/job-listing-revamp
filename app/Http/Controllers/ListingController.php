@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\JobListing;
 use Illuminate\Http\Request;
+use App\Notifications\JobListingApplicationNotification;
 
 class ListingController extends Controller
 {
     public function show(Request $request)
     {
         $user = $request->user();
-        $resumes = $user->user_resume()->get();
+        $resumes = $user->user_resume()->latest()->get();
         $listing = JobListing::find($request->listing);
         $educations = ['none', 'elem', 'jhs', 'shs', 'bachelor', 'masters', 'doctorate'];
         return view('listing.show-listing', ['listing' => $listing, 'resumes' => $resumes, 'educations' => $educations]);
@@ -30,7 +31,11 @@ class ListingController extends Controller
 
         $existing_job_application = $user->job_application()->where('job_listing_id', $formFields['job_listing_id'])->first();
         if (!$existing_job_application) {
-            $user->job_application()->create($formFields);
+            $job_application = $user->job_application()->create($formFields);
+            $job_listing_owner = $job_application->job_listing->user;
+
+            $notification = new JobListingApplicationNotification($user->email, $job_application->job_listing);
+            $job_listing_owner->notify($notification);
             return redirect(route('dashboard.job-applications'))->with('success', 'Application form submitted');
         } else {
             return redirect(route('dashboard.job-applications'))->with('error', 'You already submitted an application form on this company');

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\JobApplication;
 use App\Models\JobListing;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
+use App\Models\JobApplication;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Notifications\ApplicantStatusNotification;
 
 class UserDashboardController extends Controller
 {
@@ -208,7 +209,8 @@ class UserDashboardController extends Controller
 
             $applicant->status = $request->status;
             $applicant->save();
-            
+            $notification = new ApplicantStatusNotification($applicant->user->email, $request->status, $applicant->job_listing);
+            $applicant->user->notify($notification);
             return Redirect::back()->with(['success' => 'Applicant status successfully updated']);
         }else{
             return Redirect::back()->with(['error' => 'Applicant not found']);
