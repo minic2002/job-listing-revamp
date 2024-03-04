@@ -4,7 +4,7 @@
     <div class="flex">
         <img
             class="hidden w-40 h-40 mr-6 md:block object-cover"
-            src="{{asset('storage/' . $listing->company->logo_url)}}"
+            src="{{ $listing->company->image_url() }}"
             onerror="this.src='{{asset('images/no-image.png')}}'"
             alt=""
         />
