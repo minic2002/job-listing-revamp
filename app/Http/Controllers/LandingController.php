@@ -13,7 +13,7 @@ class LandingController extends Controller
 {
     public function home()
     {
-        $listings = JobListing::all();
+        $listings = JobListing::whereHas('company')->get();
         return view('landing', ['listings' => $listings]);
     }
 

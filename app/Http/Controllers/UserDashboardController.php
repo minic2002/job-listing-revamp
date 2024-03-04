@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\JobApplication;
 use App\Models\JobListing;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
+use App\Models\JobApplication;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Notifications\ApplicantStatusNotification;
 
 class UserDashboardController extends Controller
 {
@@ -75,7 +76,8 @@ class UserDashboardController extends Controller
     public function listings(Request $request)
     {
         $user = $request->user();
-        $listings = $user->job_listing()->latest()->get();
+        $listings = $user->job_listing()->whereHas('company')->latest()->get();
+
         return view('dashboard.listings', ['listings' => $listings]);
     }
 
@@ -113,7 +115,7 @@ class UserDashboardController extends Controller
     public function applications(Request $request)
     {
         $user = $request->user();
-        $applications = $user->job_application()->latest()->get();
+        $applications = $user->job_application()->whereHas('job_listing.company')->latest()->get();
         $headers = ['Name', 'Job Title', 'Salary Range', 'Resume', 'Date Applied', 'Application Status'];
         return view('dashboard.applications', ['applications' => $applications, 'headers' => $headers]);
     }
@@ -189,36 +191,37 @@ class UserDashboardController extends Controller
     {
         $user = $request->user();
         $listing = $user->job_listing()->find($request->listing_id);
-        if($listing != null && $listing->user_id == $user->id)
-        {
+        if ($listing != null && $listing->user_id == $user->id) {
             $applicants = $listing->job_application()->latest()->get();
-            $headers = ['Application ID','First Name','Last Name','Contact Number','Email Address','Resume','Status'];
+            $headers = ['Application ID', 'First Name', 'Last Name', 'Contact Number', 'Email Address', 'Resume', 'Status'];
             $statuses = ['pending', 'accept', 'reject', 'on-initial-interview', 'on-skills-test', 'on-final-interview', 'hired', 'failed', 'declined'];
-            return view('dashboard.job-applicants',['headers' => $headers, 'listing' => $listing, 'applicants' => $applicants, 'statuses' => $statuses]);
+            return view('dashboard.job-applicants', ['headers' => $headers, 'listing' => $listing, 'applicants' => $applicants, 'statuses' => $statuses]);
         } else {
             return redirect(route('dashboard.job-listings'))->with('error', 'Listing Id does not exist');
-        } 
+        }
     }
 
     public function update_application_status(Request $request)
     {
         $applicant = JobApplication::find($request->applicant_id);
 
-        if ($applicant){
+        if ($applicant) {
 
             $applicant->status = $request->status;
             $applicant->save();
-            
+            $notification = new ApplicantStatusNotification($applicant->user->email, $request->status, $applicant->job_listing);
+            $applicant->user->notify($notification);
             return Redirect::back()->with(['success' => 'Applicant status successfully updated']);
-        }else{
+        } else {
             return Redirect::back()->with(['error' => 'Applicant not found']);
         }
     }
 
-    public function destroy_company(Request $request){
+    public function destroy_company(Request $request)
+    {
         $user = $request->user();
         $company = $user->company()->find($request->company_id);
-        
+
         $company->delete();
 
         return Redirect::back()->with('success', 'Company successfully moved to trash');

@@ -31,7 +31,7 @@ Route::get('/register', [UserController::class, 'register'])->name('register')->
 Route::group([
     'as' => 'dashboard',
     'prefix' => 'dashboard',
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'verified']
 ], function () {
     Route::get('/', [UserDashboardController::class, 'dashboard']);
     Route::get('home', [UserDashboardController::class, 'home'])->name('.home');
@@ -55,6 +55,9 @@ Route::group([
     Route::post('apply', [ListingController::class, 'job_apply']);
 });
 
+Route::get('verify-notice', [UserController::class, 'verify_notice'])->name('verification.notice');
+Route::post('email/verification-notification', [UserController::class, 'send_verification_email'])->name('verification.send');
+Route::get('verify-email/{id}/{hash}', [UserController::class, 'verify_email'])->middleware(['signed'])->name('verification.verify');
 
 //User Logic
 

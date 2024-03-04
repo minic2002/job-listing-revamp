@@ -7,7 +7,7 @@
         <x-card class="p-10">
             <div class="flex flex-col items-center justify-center text-center">
                 <img class="w-48 mr-6 mb-6"
-                    src="{{asset('storage/' . $listing->company->logo_url)}}"
+                    src="{{$listing->company->image_url()}}"
                     onerror="this.src='{{asset('images/no-image.png')}}'"
                     alt="" />
 

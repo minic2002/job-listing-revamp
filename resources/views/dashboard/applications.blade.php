@@ -23,7 +23,7 @@
                         <div class="relative h-16 w-16">
                             <img
                             class="h-full w-full rounded-lg object-contain bg-gray-200 p-2 object-center"
-                            src="{{ asset('storage/' . $application->job_listing->company->logo_url) }}"
+                            src="{{ $application->job_listing->company->image_url() }}"
                             onerror="this.src='{{asset('/images/logo_hipe_black.png')}}'"
                             alt=""/>
                         </div>
