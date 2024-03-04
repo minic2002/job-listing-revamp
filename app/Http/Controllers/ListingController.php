@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobListing;
+use App\Models\UserResume;
 use Illuminate\Http\Request;
 use App\Notifications\JobListingApplicationNotification;
 
@@ -11,7 +12,11 @@ class ListingController extends Controller
     public function show(Request $request)
     {
         $user = $request->user();
-        $resumes = $user->user_resume()->latest()->get();
+        if ($user != null) {
+            $resumes = $user->user_resume()->latest()->get();
+        } else {
+            $resumes = UserResume::all();
+        }
         $listing = JobListing::find($request->listing);
         $educations = ['none', 'elem', 'jhs', 'shs', 'bachelor', 'masters', 'doctorate'];
         return view('listing.show-listing', ['listing' => $listing, 'resumes' => $resumes, 'educations' => $educations]);
