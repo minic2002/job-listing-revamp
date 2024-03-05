@@ -48,6 +48,9 @@
                 </td>
                 <td class="py-4">
                   <div class="flex justify-start gap-4">
+                    <a onclick="openModal('{{ $company }}')">
+                       <i class="fa-solid fa-edit text-xl text-green-600"></i>
+                    </a>
                       <form id="form_{{$company->id}}" method="POST" action="/company/{{$company->id}}/trash" enctype="multipart/form-data">
                           @csrf
                           <input type="hidden" name="company_id" value="{{$company->id}}">
@@ -68,6 +71,10 @@
       </table>
     </div>
 
+    {{-- Modal --}}
+    @include('partials.dashboard._edit-company-modal')
+    
+    {{-- End of Modal --}}
     <script>
       function confirmDelete(companyName, companyID) {
           Swal.fire({

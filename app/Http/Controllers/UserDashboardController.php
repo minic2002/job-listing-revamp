@@ -73,6 +73,28 @@ class UserDashboardController extends Controller
         return redirect(route('dashboard.company'))->with('success', 'Company Created Successfully');
     }
 
+    public function update_company(Request $request)
+    {
+        $user = $request->user();
+        $company = $user->company()->find($request->id);
+        $formFields = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'postal' => 'required',
+            'tel' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'website' => 'required',
+        ]);
+
+        if ($request->hasFile('logo_url')) {
+            $formFields['logo_url'] = $request->file('logo_url')->storePublicly('public/images/company');
+        }
+        $company->update($formFields);
+        return redirect(route('dashboard.company'))->with('success', 'Company Update Successfully');
+    }
+
     public function listings(Request $request)
     {
         $user = $request->user();
