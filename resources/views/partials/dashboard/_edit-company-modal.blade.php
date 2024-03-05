@@ -1,8 +1,8 @@
 <div class="hidden main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
     <div class="border shadow-lg modal-container bg-white md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
-        <div class="modal-content py-4 text-left px-6">
-            <div class="flex justify-between items-center pb-3">
-                <p class="text-2xl font-bold items-center">Edit Company to &nbsp; <span id="company_name"></span></p>
+        <div class="modal-content py-4 text-left px-6  pb-6">
+            <div class="flex justify-between items-center">
+                <p class="text-2xl font-bold items-center">Edit Company to <span id="company_name"></span></p>
                 <div onclick="modalClose()" class="modal-close cursor-pointer z-50">
                     <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                         viewBox="0 0 18 18">
@@ -80,7 +80,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="mb-8 flex justify-center">
+                    <div class="mb-8 flex justify-center pb-8">
                         <button type="submit" class="bg-red-600 text-white rounded py-2 px-4">Edit Company</button>
                     </div>
                 </form>
