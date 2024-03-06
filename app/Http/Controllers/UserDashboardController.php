@@ -73,12 +73,35 @@ class UserDashboardController extends Controller
         return redirect(route('dashboard.company'))->with('success', 'Company Created Successfully');
     }
 
+    public function update_company(Request $request)
+    {
+        $user = $request->user();
+        $company = $user->company()->find($request->id);
+        $formFields = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'postal' => 'required',
+            'tel' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'website' => 'required',
+        ]);
+
+        if ($request->hasFile('logo_url')) {
+            $formFields['logo_url'] = $request->file('logo_url')->storePublicly('public/images/company');
+        }
+        $company->update($formFields);
+        return redirect(route('dashboard.company'))->with('success', 'Company Update Successfully');
+    }
+
     public function listings(Request $request)
     {
         $user = $request->user();
         $listings = $user->job_listing()->whereHas('company')->latest()->get();
+        $categories = JobCategory::all();
 
-        return view('dashboard.listings', ['listings' => $listings]);
+        return view('dashboard.listings', ['listings' => $listings, 'categories' => $categories]);
     }
 
     public function listings_post(Request $request)
@@ -110,6 +133,22 @@ class UserDashboardController extends Controller
         $user->job_listing()->create($formfields);
         return redirect(route('dashboard.job-listings'))->with('success', 'Listing added successfully');
 
+    }
+
+    public function update_job_post(Request $request)
+    {
+        $user = $request->user();
+        $listing = $user->job_listing()->find($request->id);
+        $formfields = $request->validate([
+            'employment_type' => 'required',
+            'min_monthly_salary' => 'required',
+            'max_monthly_salary' => 'required',
+            'job_title' => 'required',
+            'job_category_id' => 'required',
+            'description' => 'required',
+        ]);
+        $listing->update($formfields);
+        return redirect(route('dashboard.job-listings'))->with('success', 'Listing updated successfully');
     }
 
     public function applications(Request $request)

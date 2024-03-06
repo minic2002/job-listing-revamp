@@ -13,6 +13,7 @@
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Job Category</th>
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Applicants</th>
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Employee Type</th>
+              <th scope="col" class="px-6 py-4 font-medium text-gray-900">Action</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 border-t border-gray-100">
@@ -36,13 +37,18 @@
                   <td class="px-6 py-4">{{ $listing->job_category->name }}</td>
                   <td class="px-6 py-4"><a href="/dashboard/job-listings/{{ $listing->id }}/applicants">{{ $listing->job_application->count() }}</a></td>
                   <td class="px-6 py-4">
-                  <span
-                    class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ ($listing->employment_type == 'full-time') ? 'text-green-600 bg-green-50' : 'text-orange-600 bg-orange-50' }}"
-                  >
-                    <span class="h-1.5 w-1.5 rounded-full {{ ($listing->employment_type == 'full-time') ? 'bg-green-600' : 'bg-orange-600' }}"></span>
-                    {{ ucwords(str_replace("-", " - ", $listing->employment_type)) }}
-                  </span>
-                </td>
+                    <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold {{ ($listing->employment_type == 'full-time') ? 'text-green-600 bg-green-50' : 'text-orange-600 bg-orange-50' }}">
+                      <span class="h-1.5 w-1.5 rounded-full {{ ($listing->employment_type == 'full-time') ? 'bg-green-600' : 'bg-orange-600' }}"></span>
+                      {{ ucwords(str_replace("-", " - ", $listing->employment_type)) }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex justify-start gap-4">
+                      <a onclick="openModal('{{ $listing }}')">
+                         <i class="fa-solid fa-edit text-xl text-green-600"></i>
+                      </a>
+                    </div>
+                  </td>
                 </tr>                  
                 @endforeach
             @else
@@ -53,5 +59,7 @@
           </tbody>
         </table>
       </div>
+
+      @include('partials.dashboard._edit-job-listing-modal')
 
 </x-dashboard-layout>

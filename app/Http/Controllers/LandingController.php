@@ -13,7 +13,7 @@ class LandingController extends Controller
 {
     public function home()
     {
-        $listings = JobListing::whereHas('company')->get();
+        $listings = JobListing::latest()->search(request(['search']))->whereHas('company')->get();
         return view('landing', ['listings' => $listings]);
     }
 
@@ -22,7 +22,8 @@ class LandingController extends Controller
         return view('contact');
     }
 
-    public function about(){
+    public function about()
+    {
         return view('about');
     }
 
