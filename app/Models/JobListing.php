@@ -42,4 +42,14 @@ class JobListing extends Model
     {
         return $this->hasMany(JobApplication::class, 'job_listing_id');
     }
+
+    public function scopeSearch($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query->where('job_title', 'like', '%' . request('search') . '%')
+                ->orWhere('description', 'like', '%' . request('search') . '%')
+                ->orWhere('employment_type', 'like', '%' . request('search') . '%')
+            ;
+        }
+    }
 }
