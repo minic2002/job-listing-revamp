@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -49,7 +53,7 @@ class UserController extends Controller
         if ($user->hasVerifiedEmail()) {
             return redirect('/dashboard')->with('error', 'You are already verified');
         } else {
-            return view('users.verification.verify-email');
+            return view('auth.verify-email');
         }
     }
 
@@ -60,7 +64,7 @@ class UserController extends Controller
             return redirect('/dashboard')->with('success', 'User succesfully verified');
         }
         $user->sendEmailVerificationNotification();
-        return view('users.verification.verify-email');
+        return view('auth.verify-email');
     }
 
     public function verify_email(EmailVerificationRequest $request)
@@ -89,6 +93,57 @@ class UserController extends Controller
             return redirect('/dashboard/home')->with('success', 'You are now logged in');
         }
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    }
+
+    public function password_request()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function password_email(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['success' => 'Password reset link has been sent to email.'])
+            : back()->with(['error' => 'Failed to sent password reset link']);
+    }
+
+    public function password_reset(Request $request)
+    {
+        $token = $request->token;
+        $email = $request->email;
+        return view('auth.reset-password', ['token' => $token, 'email' => $email]);
+    }
+
+    public function password_update(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with(['success' => 'Password has been sucessfully changed'])
+            : back()->with(['error' => 'Failed to change password']);
     }
 
     public function logout(Request $request)

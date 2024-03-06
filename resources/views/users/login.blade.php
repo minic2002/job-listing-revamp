@@ -26,8 +26,9 @@
                 <div class="mb-8 flex justify-center">
                     <button type="submit" class="bg-red-600 text-white rounded py-2 px-4">Login</button>
                 </div>
-                <div>
+                <div class="flex justify-center items-center">
                     Create an account? <a href="/register" class="text-red-600">Register</a>
+                    <a href="/forgot-password" class="text-red-600 ml-16">Forgot Password?</a>
                 </div>
             </form>
         </x-card>
