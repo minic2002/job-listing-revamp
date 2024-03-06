@@ -66,6 +66,7 @@ Route::post('/update/settings', [UserDashboardController::class, 'update_setting
 Route::post('/store/company', [UserDashboardController::class, 'store_company']);
 Route::post('/update/company', [UserDashboardController::class, 'update_company']);
 Route::post('/store/job-post', [UserDashboardController::class, 'store_job_post']);
+Route::post('/update/job-post', [UserDashboardController::class, 'update_job_post']);
 Route::post('/store/resume', [UserDashboardController::class, 'store_resume']);
 Route::post('/job-listings/{listing_id}/applicant/{applicant_id}/update-status',[UserDashboardController::class, 'update_application_status']);
 Route::post('/company/{company_id}/trash', [UserDashboardController::class, 'destroy_company']);

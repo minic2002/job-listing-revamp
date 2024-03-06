@@ -2,7 +2,7 @@
     <div class="border shadow-lg modal-container bg-white md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
         <div class="modal-content py-4 text-left px-6  pb-6">
             <div class="flex justify-between items-center">
-                <p class="text-2xl font-bold items-center">Edit Company to <span id="company_name"></span></p>
+                <p class="text-2xl font-bold items-center">Edit Company: <span id="company_name"></span></p>
                 <div onclick="modalClose()" class="modal-close cursor-pointer z-50">
                     <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                         viewBox="0 0 18 18">
