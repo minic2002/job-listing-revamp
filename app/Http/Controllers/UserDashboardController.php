@@ -221,7 +221,7 @@ class UserDashboardController extends Controller
             'resume_url' => 'required|mimes:pdf,xlsx,xls,csv',
         ]);
 
-        $formfields['resume_url'] = $request->file('resume_url')->store('resumes', 'public');
+        $formfields['resume_url'] = $request->file('resume_url')->store('private/resume');
         $user->user_resume()->create($formfields);
         return redirect(route('dashboard.my-resume'))->with('success', 'Resume created successfully');
     }
@@ -264,5 +264,16 @@ class UserDashboardController extends Controller
         $company->delete();
 
         return Redirect::back()->with('success', 'Company successfully moved to trash');
+    }
+
+    public function profile(Request $request)
+    {
+        $user = $request->user();
+        $userDetails = $user->user_detail()->first();
+        if ($userDetails) {
+            return view('dashboard.profile', ['userDetails' => $userDetails]);
+        } else {
+            return redirect(route('dashboard.settings'));
+        }
     }
 }

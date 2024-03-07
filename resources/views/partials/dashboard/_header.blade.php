@@ -6,6 +6,19 @@
          <h1 class="text-hipe-blue text-4xl">LISTING</h1>
       </div>
       <div class="mt-3 flex">
+
+        <div class="relative inline-flex w-fit">
+            <div
+                class="text-md absolute bottom-auto left-auto right-4 top-2 z-10 inline-block w-6 -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-red-700 px-2 py-1 text-start align-baseline font-bold leading-none text-white">
+                <p class="" id="notification-badge">0</p>
+            </div>
+            <div class="relative mr-3">
+                <a href="{{ route('dashboard.notification') }}">
+                    <i class="fa-solid fa-bell text-3xl text-white"> </i>
+                </a>
+            </div>
+        </div>
+        
          <div class="px-2 ">
              @if (auth()->user()->user_detail)
              <img class="h-9 w-9 rounded-full object-contain bg-gray-200 object-fill"
@@ -21,3 +34,32 @@
    </div>
    {{--  --}}
 </nav>
+
+<script>
+$(document).ready(function() {
+    updateNotificationBadge();
+    // Fetch the count of unread notifications every 30 seconds
+    setInterval(updateNotificationBadge, 30000); // 30 seconds
+});
+
+function updateNotificationBadge() {
+    $.ajax({
+        url: '/api/notifications/unread_count',
+        type: 'GET',
+        data: { user_id: {{ auth()->user()->id }} },
+        success: function(response) {
+            var count = response.count;
+            $('#notification-badge').text(count);
+            // Hide the badge if there are no unread notifications
+            if (count == 0) {
+                $('#notification-badge').hide();
+            } else {
+                $('#notification-badge').show();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+</script>

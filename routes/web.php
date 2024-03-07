@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDashboardController;
@@ -46,6 +47,8 @@ Route::group([
     Route::get('my-resume', [UserDashboardController::class, 'resume'])->name('.my-resume');
     Route::get('my-resume/post-resume', [UserDashboardController::class, 'post_resume'])->name('.my-resume-post');
     Route::get('settings', [UserDashboardController::class, 'settings'])->name('.settings');
+    Route::get('profile', [UserDashboardController::class, 'profile'])->name('.profile');
+    Route::get('notification', [NotificationController::class, 'notificationPage'])->name('.notification');
 });
 
 //Listing Page/s

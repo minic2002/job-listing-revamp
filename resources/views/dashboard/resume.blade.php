@@ -52,7 +52,7 @@
                     </div>
                     <div class="ml-2 border-l-2 px-2 -mr-6 h-12">
                         <button
-                            onclick="location.href='{{ asset('storage/' . $resume->resume_url) }}'"
+                            onclick="location.href='{{ $resume->private_resume_url() }}'"
                             class="p-2 rounded-full bg-hipe-dark-blue text-white w-20 ">view
                         </button>
                     </div>

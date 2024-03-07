@@ -31,6 +31,12 @@
                     <span class="ml-3 flex-1 whitespace-nowrap">My Resume</span>
                 </a>
             </li>
+            <li class="hover:bg-blue-500 hover:rounded-md hover:text-white p-2 {{ Request::is('dashboard/profile') ? 'bg-hipe-blue rounded-md text-white' : '' }}">
+                <a href="{{ route('dashboard.profile') }}" class="">
+                    <i class="ps-2.5 fa-solid fa-user"></i>
+                    <span class="ml-3 flex-1 whitespace-nowrap">Profile</span>
+                </a>
+            </li>
             <li class="hover:bg-blue-500 hover:rounded-md hover:text-white p-2 {{ Request::is('dashboard/settings') ? 'bg-hipe-blue rounded-md text-white' : '' }}">
                 <a href="{{ route('dashboard.settings') }}" class="">
                     <i class="ps-2.5 fa-solid fa-gear"></i>
