@@ -221,7 +221,7 @@ class UserDashboardController extends Controller
             'resume_url' => 'required|mimes:pdf,xlsx,xls,csv',
         ]);
 
-        $formfields['resume_url'] = $request->file('resume_url')->store('resumes', 'public');
+        $formfields['resume_url'] = $request->file('resume_url')->store('private/resume');
         $user->user_resume()->create($formfields);
         return redirect(route('dashboard.my-resume'))->with('success', 'Resume created successfully');
     }

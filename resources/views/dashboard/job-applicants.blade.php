@@ -21,7 +21,7 @@
                         <td class="px-6 py-4">{{ $applicant->tel }}</td>
                         <td class="px-6 py-4">{{ $applicant->user->email }}</td>
                         <td class="px-6 py-4">
-                            <a href="{{ asset('storage/' . $applicant->user_resume->resume_url ) }}" target="_blank">
+                            <a href="{{ $applicant->user_resume->private_resume_url() }}" target="_blank">
                                 {{ $applicant->user_resume->name }}
                             </a>
                         </td>
