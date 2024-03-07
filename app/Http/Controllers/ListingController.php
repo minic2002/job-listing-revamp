@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JobListing;
 use App\Models\UserResume;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Notifications\JobListingApplicationNotification;
 
@@ -41,6 +42,10 @@ class ListingController extends Controller
 
             $notification = new JobListingApplicationNotification($user->email, $job_application->job_listing);
             $job_listing_owner->notify($notification);
+            Notification::create([
+                'user_id' => $job_listing_owner->id,
+                'message' => 'You have a new job application',
+            ]);
             return redirect(route('dashboard.job-applications'))->with('success', 'Application form submitted');
         } else {
             return redirect(route('dashboard.job-applications'))->with('error', 'You already submitted an application form on this company');

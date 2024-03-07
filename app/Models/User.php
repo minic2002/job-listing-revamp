@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\JobListing;
 use App\Models\UserDetail;
 use App\Models\UserResume;
+use App\Models\Notification;
 use App\Models\JobApplication;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -73,5 +74,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function job_application()
     {
         return $this->hasMany(JobApplication::class, 'user_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
     }
 }
