@@ -265,4 +265,15 @@ class UserDashboardController extends Controller
 
         return Redirect::back()->with('success', 'Company successfully moved to trash');
     }
+
+    public function profile(Request $request)
+    {
+        $user = $request->user();
+        $userDetails = $user->user_detail()->first();
+        if ($userDetails) {
+            return view('dashboard.profile', ['userDetails' => $userDetails]);
+        } else {
+            return redirect(route('dashboard.settings'));
+        }
+    }
 }

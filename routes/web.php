@@ -46,6 +46,7 @@ Route::group([
     Route::get('my-resume', [UserDashboardController::class, 'resume'])->name('.my-resume');
     Route::get('my-resume/post-resume', [UserDashboardController::class, 'post_resume'])->name('.my-resume-post');
     Route::get('settings', [UserDashboardController::class, 'settings'])->name('.settings');
+    Route::get('profile', [UserDashboardController::class, 'profile'])->name('.profile');
 });
 
 //Listing Page/s
