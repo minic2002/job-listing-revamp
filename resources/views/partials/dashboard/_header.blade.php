@@ -39,7 +39,7 @@
 $(document).ready(function() {
     updateNotificationBadge();
     // Fetch the count of unread notifications every 30 seconds
-    setInterval(updateNotificationBadge, 30000); // 30 seconds
+    setInterval(updateNotificationBadge, 2000); // 30 seconds
 });
 
 function updateNotificationBadge() {
@@ -50,12 +50,6 @@ function updateNotificationBadge() {
         success: function(response) {
             var count = response.count;
             $('#notification-badge').text(count);
-            // Hide the badge if there are no unread notifications
-            if (count == 0) {
-                $('#notification-badge').hide();
-            } else {
-                $('#notification-badge').show();
-            }
         },
         error: function(xhr, status, error) {
             console.error(error);

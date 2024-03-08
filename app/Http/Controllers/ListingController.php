@@ -44,7 +44,8 @@ class ListingController extends Controller
             $job_listing_owner->notify($notification);
             Notification::create([
                 'user_id' => $job_listing_owner->id,
-                'message' => 'You have a new job application',
+                'application_id' => $job_application->id,
+                'message' => $job_application->first_name . " " . $job_application->last_name . ' has sent an application to your job listing ' . $job_application->job_listing->job_title,
             ]);
             return redirect(route('dashboard.job-applications'))->with('success', 'Application form submitted');
         } else {

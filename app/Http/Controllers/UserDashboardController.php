@@ -231,7 +231,7 @@ class UserDashboardController extends Controller
         $user = $request->user();
         $listing = $user->job_listing()->find($request->listing_id);
         if ($listing != null && $listing->user_id == $user->id) {
-            $applicants = $listing->job_application()->latest()->get();
+            $applicants = $listing->job_application()->latest()->filter(request(['application_id']))->get();
             $headers = ['Application ID', 'First Name', 'Last Name', 'Contact Number', 'Email Address', 'Resume', 'Status'];
             $statuses = ['pending', 'accept', 'reject', 'on-initial-interview', 'on-skills-test', 'on-final-interview', 'hired', 'failed', 'declined'];
             return view('dashboard.job-applicants', ['headers' => $headers, 'listing' => $listing, 'applicants' => $applicants, 'statuses' => $statuses]);

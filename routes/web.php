@@ -60,9 +60,15 @@ Route::group([
     Route::post('apply', [ListingController::class, 'job_apply']);
 });
 
+//Notifications
+
+#Email
 Route::get('verify-notice', [UserController::class, 'verify_notice'])->name('verification.notice');
 Route::post('email/verification-notification', [UserController::class, 'send_verification_email'])->name('verification.send');
 Route::get('verify-email/{id}/{hash}', [UserController::class, 'verify_email'])->middleware(['signed'])->name('verification.verify');
+
+#Page
+Route::get('read-notification/{id}', [NotificationController::class, 'readNotification']);
 
 //User Logic
 
