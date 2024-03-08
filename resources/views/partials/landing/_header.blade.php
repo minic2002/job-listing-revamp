@@ -2,9 +2,9 @@
     <img class="w-[100px]" src="images/hipe_logo.svg" alt="">
     <div class="space-x-6 text-white font-semibold">
         @auth
-            <a href="{{ route('dashboard.home') }}">Homeadsd</a>
+            <a href="{{ route('dashboard.home') }}">Home</a>
         @else
-            <a href="/">Home</a>
+            <a href="/">Homecscnwec</a>
         @endauth
         
         <a href="/about">About</a>
